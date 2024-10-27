@@ -17,7 +17,7 @@ class sonar():
     def __init__(self):
         rospy.init_node('sonar', anonymous=True)
         self.distance_publisher = rospy.Publisher('/sonar_dist',Float32, queue_size=1)
-        self.r = rospy.Rate(15)
+        self.r = rospy.Rate(1)
     def dist_sendor(self,dist):
         data = Float32()
         data.data=dist
