@@ -15,7 +15,7 @@ rospy.init_node('ir_sensor_publisher')
 pub = rospy.Publisher('/ir_sensor_state', Bool, queue_size=10)
 
 booooool = False
-
+rate = rospy.Rate(1)  # 1 Hz
 # Main loop
 while not rospy.is_shutdown():
     state_out = []
@@ -41,3 +41,4 @@ while not rospy.is_shutdown():
     if booooool:
         rospy.loginfo("Publishing True to /ir_sensor_state topic")
         pub.publish(booooool)
+    rate.sleep()  # Sleep to maintain 1 Hz rate
