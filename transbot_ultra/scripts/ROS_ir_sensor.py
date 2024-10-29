@@ -15,7 +15,7 @@ rospy.init_node('ir_sensor_publisher')
 pub = rospy.Publisher('/infrared_sensor', Bool, queue_size=10)
 
 booooool = False
-rate = rospy.Rate(1)
+rate = rospy.Rate(1)  # 1 Hz
 # Main loop
 while not rospy.is_shutdown():
     state_out = []
