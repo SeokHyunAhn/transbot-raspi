@@ -12,15 +12,14 @@ GPIO.setup(pins, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 # Initialize ROS node
 rospy.init_node('ir_sensor_publisher')
-pub = rospy.Publisher('/ir_sensor_state', Bool, queue_size=10)
+pub = rospy.Publisher('/infrared_sensor', Bool, queue_size=10)
 
 booooool = False
-
+rate = rospy.Rate(1)
 # Main loop
 while not rospy.is_shutdown():
     state_out = []
-    time.sleep(1)
-    
+        
     for pin in pins:
         state_in = GPIO.input(pin)
         state_out.append(state_in)
@@ -32,12 +31,14 @@ while not rospy.is_shutdown():
     # White = 1, Black = 0
     print(f"Sum of sensor states: {results}")
 
-    if results <= 3:
+    if results <= 4:
         booooool = True
+        time.sleep(5)
     else:
         booooool = False
     
     # Publish only if booooool is True
     if booooool:
-        rospy.loginfo("Publishing True to /ir_sensor_state topic")
+        rospy.loginfo("Publishing True to /infrared_sensor topic")
         pub.publish(booooool)
+    rate.sleep()  # Sleep to maintain 1 Hz rate
